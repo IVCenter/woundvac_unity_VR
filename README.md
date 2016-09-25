@@ -2,6 +2,9 @@
 
 Augmented reality medical device remote training tool for wound vacuum using Microsoft HoloLens, Oculus Rift, and Razer Hydra.
 
+## Dependencies
+Unity3D 5.4.0f3-HTP Personal
+
 ## Unity HoloLens Deployment Instructions
 
 ### In Unity Editor:
