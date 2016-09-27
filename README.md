@@ -8,6 +8,7 @@ Unity3D 5.4.0f3-HTP Personal
 ## Unity HoloLens Deployment Instructions
 
 ### In Unity Editor:
+* Make sure Main Camera's "Clear Flags" is set to "Solid Color"
 * Make sure Main Camera's background is set to black because that's the default color used by HoloLens for transparency.
 * Open Project Settings -> Quality, under the down arrow below the windows store icon on top, check Fastest.
 * Open Player Settings, go to Other Settings, enable Virtual Reality Supported (if you have the correct Unity version for HoloLens you'll see the only Virtual Reality SDKs is Windows Holographic), go to Publishing Settings, in Capabilities, enable Microphone, Bluetooth and Spatial Perception.
