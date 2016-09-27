@@ -19,6 +19,7 @@ Unity3D 5.4.0f3-HTP Personal
 * Open the built .sln file in Visual Studio.
 * Make sure to select the following configurations: Release (DEBUG compiles faster) | x86 | Remote Machine.
 * Once Remote Machine is chosen, a Remote Connections dialog shows up, enter your HoloLens' IP address (Find the IP address on the device under Settings > Network & Internet > Wi-Fi > Advanced Options.), Set Authentication Mode to be Unencrypted Protocol. Then press Select to establish a connection to your device.
+* Note that the IP address for HoloLens is susceptible to change, so checking the HoloLens' IP address before every deployment is recommended.
 * If this is the first time you deploy, you will need to enter a pin. The pin should be shown on your device, but if it is not, go to Settings, Update, For Developers, Pair. Then enter the pin into the Visual Studio dialog.
 * Finally, select Debug / Start without Debugging.
 
