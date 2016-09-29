@@ -4,20 +4,21 @@ using System.Collections.Generic;
 
 // Original Source: http://nihilistdev.blogspot.com/2013/05/outline-in-unity-with-mesh-transparency.html
 // Shader Source: http://answers.unity3d.com/questions/60155/is-there-a-shader-to-only-add-an-outline.html
-public class GrabHighlight : MonoBehaviour {
+public class GrabHighlight : MonoBehaviour
+{
+    [SerializeField]
+    private bool highlightChildren = true;
 
-    [SerializeField] private bool highlightChildren = true;
-
-    [SerializeField] private Color meshColor = new Color(1.0f, 1.0f, 1.0f, 0.5f);
-
-    [SerializeField] private Color outlineColor = new Color(1.0f, 1.0f, 0.0f, 1.0f);
+    [SerializeField]
+    private Color meshColor = new Color(1.0f, 1.0f, 1.0f, 0.5f);
 
     private List<Material[]> normalMaterials;
     private List<GameObject> outlineObjects;
     private List<GameObject> normalObjects;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start()
+    {
 
         normalMaterials = new List<Material[]>();
         outlineObjects = new List<GameObject>();
@@ -75,7 +76,7 @@ public class GrabHighlight : MonoBehaviour {
 
 
         }
-	}
+    }
 
     public void makeTransparent()
     {
@@ -110,9 +111,10 @@ public class GrabHighlight : MonoBehaviour {
             }
         }
     }
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
 }

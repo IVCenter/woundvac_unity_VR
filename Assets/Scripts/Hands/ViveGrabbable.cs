@@ -2,8 +2,8 @@
 using System.Collections;
 
 [RequireComponent(typeof(GrabHighlight), typeof(Rigidbody), typeof(Collider))]
-public class ViveGrabbable : MonoBehaviour {
-
+public class ViveGrabbable : MonoBehaviour
+{
     public bool isActive = false;
 
     public void OnHover()
@@ -21,11 +21,13 @@ public class ViveGrabbable : MonoBehaviour {
         GetComponent<GrabHighlight>().makeOpaque();
     }
 
-	void Start () {
-	
-	}
-	
-	void Update () {
-	
-	}
+    void Start()
+    {
+
+    }
+
+    void Update()
+    {
+
+    }
 }
