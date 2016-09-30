@@ -65,6 +65,7 @@ public class GrabHighlight : MonoBehaviour
             materials = new Material[materials.Length];
             for (int j = 0; j < materials.Length; j++)
             {
+                // TODO - null pointer exception on Stencil/Outline
                 materials[j] = new Material(Shader.Find("Stencil/Outline"));
             }
 
