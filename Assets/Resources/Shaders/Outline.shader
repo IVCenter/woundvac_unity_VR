@@ -3,7 +3,7 @@
 	Properties
 	{
 		_Color("Color", Color) = (0,0,1,0.2)
-		_Thickness("Thickness", float) = 2
+		_Thickness("Thickness", float) = 0.5
 	}
 		SubShader
 	{
