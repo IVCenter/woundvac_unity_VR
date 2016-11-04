@@ -22,5 +22,7 @@ public class Move : NetworkBehaviour
 
     public override void OnStartServer()
     {
+        Debug.Log("NetworkServer spawned object: " + this.name);
+        NetworkServer.Spawn(this.gameObject);
     }
 }
