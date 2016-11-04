@@ -7,7 +7,12 @@ public class ViveControllerGrab : MonoBehaviour
     public GameObject currentlySelectedObject;
     public bool isLeftHand;
     public bool isGrabbing = false;
-    
+
+    // Handels animation
+    public Animator leftHandAnimator;
+    public Animator rightHandAnimator;
+
+
     private SteamVR_TrackedObject trackedObj;
     private FixedJoint grabJoint;
     private bool grabbed = false;
@@ -16,6 +21,7 @@ public class ViveControllerGrab : MonoBehaviour
     void Awake()
     {
         trackedObj = GetComponent<SteamVR_TrackedObject>();
+
     }
 
     void Start()
@@ -64,14 +70,55 @@ public class ViveControllerGrab : MonoBehaviour
             }
         }
 
+
+
+
         if (isLeftHand)
         {
-            //if (device.GetTouchDown(SteamVR_Controller.ButtonMask.ApplicationMenu))
-            //{
-            //}
+            if (device.GetPress(SteamVR_Controller.ButtonMask.Trigger))
+            {
+                leftHandAnimator.SetBool("GripBall", true);
+            }
+            else
+            {
+                leftHandAnimator.SetBool("GripBall", false);
+                leftHandAnimator.SetBool("Idle", true);
+
+            }
+
+            if (device.GetPress(SteamVR_Controller.ButtonMask.Touchpad))
+            {
+                leftHandAnimator.SetBool("Point", true);
+            }
+            else
+            {
+                leftHandAnimator.SetBool("Point", false);
+                leftHandAnimator.SetBool("Idle", true);
+            }
         }
         else
         {
+            if (device.GetPress(SteamVR_Controller.ButtonMask.Trigger))
+            {
+                rightHandAnimator.SetBool("GripBall", true);
+            }
+            else
+            {
+                rightHandAnimator.SetBool("GripBall", false);
+                rightHandAnimator.SetBool("Idle", true);
+
+            }
+
+            if (device.GetPress(SteamVR_Controller.ButtonMask.Touchpad))
+            {
+                rightHandAnimator.SetBool("Point", true);
+            }
+            else
+            {
+                rightHandAnimator.SetBool("Point", false);
+                rightHandAnimator.SetBool("Idle", true);
+
+            }
         }
 
     }

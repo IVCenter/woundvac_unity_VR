@@ -31,19 +31,18 @@ public class SixenseHand : MonoBehaviour
         // Test
         if (Input.GetKeyDown(KeyCode.A))
         {
-            m_animator.SetBool("Point", true);
-            Debug.Log("Pointing");
+            m_animator.SetBool("Idle", true); 
         }
         else if (Input.GetKeyUp(KeyCode.A))
         {
-            m_animator.SetBool("Point", false);
+            m_animator.SetBool("Idle", false);
         }
 
         if (Input.GetKeyDown(KeyCode.B))
         {
             m_animator.SetBool("GripBall", true);
         }
-        else if(Input.GetKeyDown(KeyCode.B))
+        else if(Input.GetKeyUp(KeyCode.B))
         {
             m_animator.SetBool("GripBall", false);
         }
