@@ -12,12 +12,15 @@ public class Move : NetworkBehaviour
     {
         if (!isServer) return;
 
-        Debug.Log("fdklasfe");
         float translation = Input.GetAxis("Vertical") * movementSpeed * Time.deltaTime;
         float rotation = Input.GetAxis("Horizontal") * rotationSpeed * Time.deltaTime;
 
         transform.Translate(0, 0, translation);
         transform.Rotate(0, rotation, 0);
 
+    }
+
+    public override void OnStartServer()
+    {
     }
 }

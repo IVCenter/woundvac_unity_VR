@@ -22,6 +22,8 @@ public class GameManager : NetworkBehaviour {
         foreach (GameObject go in syncObjects)
         {
             NetworkServer.Spawn(go);
+            Debug.Log("NetworkServer spawned object: " + go.name);
+
         }
     }
 }
