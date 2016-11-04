@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.Networking;
 
-public class Move : MonoBehaviour
+public class Move : NetworkBehaviour
 {
 
     public float movementSpeed = 10f;
@@ -9,7 +10,9 @@ public class Move : MonoBehaviour
 
     void Update()
     {
+        if (!isServer) return;
 
+        Debug.Log("fdklasfe");
         float translation = Input.GetAxis("Vertical") * movementSpeed * Time.deltaTime;
         float rotation = Input.GetAxis("Horizontal") * rotationSpeed * Time.deltaTime;
 
