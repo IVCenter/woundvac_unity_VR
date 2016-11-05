@@ -6,23 +6,26 @@ using UnityEngine.Networking;
 public class ViveGrabbable : NetworkBehaviour
 {
     [SyncVar]
-    public bool isActive = false;
+    public bool isGrabbed = false;
+
+    [SyncVar]
+    public bool highlightObject = false;
 
     private Rigidbody rigid;
 
     public void OnHover()
     {
-        GetComponent<GrabHighlight>().makeTransparent();
+        highlightObject = true;
     }
 
     public void OnHoverLeave()
     {
-        GetComponent<GrabHighlight>().makeOpaque();
+        highlightObject = false;
     }
 
     public virtual void OnGrab()
     {
-        GetComponent<GrabHighlight>().makeOpaque();
+        highlightObject = false;
     }
 
     void Start()
@@ -32,7 +35,7 @@ public class ViveGrabbable : NetworkBehaviour
 
     void Update()
     {
-        if (isActive)
+        if (isGrabbed)
         {
             if (rigid.useGravity)
             {
@@ -45,6 +48,15 @@ public class ViveGrabbable : NetworkBehaviour
             {
                 rigid.useGravity = true;
             }
+        }
+
+        if (highlightObject)
+        {
+            GetComponent<GrabHighlight>().DrawOutline();
+        }
+        else
+        {
+            GetComponent<GrabHighlight>().EraseOutline();
         }
     }
 }

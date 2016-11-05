@@ -15,6 +15,7 @@ public class GrabHighlight : MonoBehaviour
     private List<Material[]> normalMaterials;
     private List<GameObject> outlineObjects;
     private List<GameObject> normalObjects;
+    private bool outlineIsOn = false;
 
     // Use this for initialization
     void Start()
@@ -79,8 +80,9 @@ public class GrabHighlight : MonoBehaviour
         }
     }
 
-    public void makeTransparent()
+    public void DrawOutline()
     {
+        if (outlineIsOn) return;
 
         for (int i = 0; i < normalObjects.Count; i++)
         {
@@ -98,10 +100,13 @@ public class GrabHighlight : MonoBehaviour
             }
         }
 
+        outlineIsOn = true;
     }
 
-    public void makeOpaque()
+    public void EraseOutline()
     {
+        if (!outlineIsOn) return;
+
         for (int i = 0; i < normalObjects.Count; i++)
         {
             normalObjects[i].GetComponent<MeshRenderer>().materials = normalMaterials[i];
@@ -111,6 +116,8 @@ public class GrabHighlight : MonoBehaviour
                 outlineObjects[j].SetActive(false);
             }
         }
+
+        outlineIsOn = false;
     }
 
     // Update is called once per frame

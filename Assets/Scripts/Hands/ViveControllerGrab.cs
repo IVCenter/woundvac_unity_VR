@@ -161,7 +161,7 @@ public class ViveControllerGrab : MonoBehaviour
         var viveGrabbable = currentlySelectedObject.GetComponent<ViveGrabbable>();
         if (viveGrabbable != null)
         {
-            viveGrabbable.isActive = true;
+            viveGrabbable.isGrabbed = true;
             viveGrabbable.OnGrab();
         }
 
@@ -185,7 +185,7 @@ public class ViveControllerGrab : MonoBehaviour
         var viveGrabbable = currentlySelectedObject.GetComponent<ViveGrabbable>();
         if (viveGrabbable != null)
         {
-            viveGrabbable.isActive = false;
+            viveGrabbable.isGrabbed = false;
         }
 
         isGrabbing = false;
