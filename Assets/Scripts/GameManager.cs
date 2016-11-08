@@ -30,12 +30,12 @@ public class GameManager : NetworkBehaviour {
     public override void OnStartClient()
     {
         Debug.Log("Client Started");
-        foreach (GameObject go in syncObjects)
-        {
-            //GameObject g = Instantiate(go) as GameObject;
-            //NetworkServer.Spawn(g);
-            //Debug.Log("NetworkServer spawned object: " + g.name);
+        //foreach (GameObject go in syncObjects)
+        //{
+        //    GameObject g = Instantiate(go) as GameObject;
+        //    NetworkServer.Spawn(g);
+        //    Debug.Log("NetworkServer spawned object: " + g.name);
 
-        }
+        //}
     }
 }

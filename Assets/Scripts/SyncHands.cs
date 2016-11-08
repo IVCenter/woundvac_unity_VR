@@ -4,29 +4,85 @@ using UnityEngine.Networking;
 
 public class SyncHands : NetworkBehaviour {
 
-    private Transform viveHand;
+    private Transform viveHandLeft;
+    private SteamVR_Controller.Device leftHandDevice;
 
-	// Use this for initialization
-	void Start () {
+
+    private Animator anim;
+
+    public enum GESTURE
+    {
+        IDLE,
+        POINT,
+        GRAB,
+    }
+    private GESTURE gesture = GESTURE.IDLE;
+
+    void Awake ()
+    {
+        anim = GetComponent<Animator>();
+    }
+
+    void Start () {
 	    
 	}
 	
-	// Update is called once per frame
 	void Update () {
+
+        switch (gesture)
+        {
+            case GESTURE.IDLE:
+                anim.SetBool("Point", false);
+                anim.SetBool("GripBall", false);
+                anim.SetBool("Idle", true);
+                break;
+            case GESTURE.POINT:
+                anim.SetBool("GripBall", false);
+                anim.SetBool("Idle", false);
+                anim.SetBool("Point", true);
+                break;
+
+            case GESTURE.GRAB:
+                anim.SetBool("Point", false);
+                anim.SetBool("Idle", false);
+                anim.SetBool("GripBall", true);
+                break;
+            default:
+                break;
+        }
+
+
 
         if (isServer)
         {
-            if (viveHand)
+            if (viveHandLeft != null && leftHandDevice != null)
             {
-                this.transform.position = viveHand.position;
-                this.transform.rotation = viveHand.rotation;
+                this.transform.position = viveHandLeft.position;
+                this.transform.rotation = viveHandLeft.rotation;
+
+                if (leftHandDevice.GetPress(SteamVR_Controller.ButtonMask.Trigger))
+                {
+                    gesture = GESTURE.GRAB;
+                }
+                else if (leftHandDevice.GetPress(SteamVR_Controller.ButtonMask.Touchpad))
+                {
+                    gesture = GESTURE.POINT;
+                }
+                else
+                {
+                    gesture = GESTURE.IDLE;
+                }
+
             }
             else
             {
-                var go = GameObject.Find("Hand - Left");
+                Debug.Log("Looking for LeftHand");
+                var go = GameObject.Find("HandLeftPos");
                 if (go)
                 {
-                    viveHand = go.transform;
+                    viveHandLeft = go.transform;
+                    // Assigning ViveControllerGrab.leftHandAnimator to be this animator
+                    leftHandDevice = viveHandLeft.parent.GetComponent<ViveControllerGrab>().device;
                 }
             }
         }

@@ -10,7 +10,9 @@ using Valve.VR;
 
 public class SteamVR_ControllerManager : MonoBehaviour
 {
-	public GameObject left, right;
+    public static SteamVR_ControllerManager instance;
+
+    public GameObject left, right;
 	public GameObject[] objects; // populate with objects you want to assign to additional controllers
 
 	uint[] indices; // assigned
@@ -22,6 +24,8 @@ public class SteamVR_ControllerManager : MonoBehaviour
 
 	void Awake()
 	{
+        instance = this;
+
 		// Add left and right entries to the head of the list so we only have to operate on the list itself.
 		var additional = (this.objects != null) ? this.objects.Length : 0;
 		var objects = new GameObject[2 + additional];
