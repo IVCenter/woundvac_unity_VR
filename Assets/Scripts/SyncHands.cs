@@ -16,7 +16,9 @@ public class SyncHands : NetworkBehaviour {
         POINT,
         GRAB,
     }
-    private GESTURE gesture = GESTURE.IDLE;
+
+    [SyncVar]
+    public GESTURE gesture = GESTURE.IDLE;
 
     void Awake ()
     {
@@ -27,8 +29,8 @@ public class SyncHands : NetworkBehaviour {
 	    
 	}
 	
-	void Update () {
-
+    private void AnimateHand()
+    {
         switch (gesture)
         {
             case GESTURE.IDLE:
@@ -37,36 +39,38 @@ public class SyncHands : NetworkBehaviour {
                 anim.SetBool("Idle", true);
                 break;
             case GESTURE.POINT:
-                anim.SetBool("GripBall", false);
-                anim.SetBool("Idle", false);
+                //anim.SetBool("GripBall", false);
+                //anim.SetBool("Idle", false);
                 anim.SetBool("Point", true);
                 break;
 
             case GESTURE.GRAB:
-                anim.SetBool("Point", false);
-                anim.SetBool("Idle", false);
+                //anim.SetBool("Point", false);
+                //anim.SetBool("Idle", false);
                 anim.SetBool("GripBall", true);
                 break;
             default:
                 break;
         }
+    }
 
+	void LateUpdate () {
 
 
         if (isServer)
         {
-            if (viveHandLeft != null && leftHandDevice != null)
+            if (viveHandLeft != null)
             {
                 this.transform.position = viveHandLeft.position;
                 this.transform.rotation = viveHandLeft.rotation;
 
-                if (leftHandDevice.GetPress(SteamVR_Controller.ButtonMask.Trigger))
-                {
-                    gesture = GESTURE.GRAB;
-                }
-                else if (leftHandDevice.GetPress(SteamVR_Controller.ButtonMask.Touchpad))
+                if (leftHandDevice.GetPress(SteamVR_Controller.ButtonMask.Touchpad))
                 {
                     gesture = GESTURE.POINT;
+                }
+                else if (leftHandDevice.GetPress(SteamVR_Controller.ButtonMask.Trigger))
+                {
+                    gesture = GESTURE.GRAB;
                 }
                 else
                 {
@@ -86,5 +90,12 @@ public class SyncHands : NetworkBehaviour {
                 }
             }
         }
-	}
+
+
+
+
+
+        AnimateHand();
+
+    }
 }
