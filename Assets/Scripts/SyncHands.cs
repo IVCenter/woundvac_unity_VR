@@ -4,8 +4,13 @@ using UnityEngine.Networking;
 
 public class SyncHands : NetworkBehaviour {
 
+    public bool isLeft;
+
     private Transform viveHandLeft;
     private SteamVR_Controller.Device leftHandDevice;
+
+    private Transform viveHandRight;
+    private SteamVR_Controller.Device rightHandDevice;
 
 
     private Animator anim;
@@ -54,40 +59,86 @@ public class SyncHands : NetworkBehaviour {
         }
     }
 
+    private void LeftHandTracking()
+    {
+        if (viveHandLeft != null)
+        {
+            this.transform.position = viveHandLeft.position;
+            this.transform.rotation = viveHandLeft.rotation;
+
+            if (leftHandDevice.GetPress(SteamVR_Controller.ButtonMask.Touchpad))
+            {
+                gesture = GESTURE.POINT;
+            }
+            else if (leftHandDevice.GetPress(SteamVR_Controller.ButtonMask.Trigger))
+            {
+                gesture = GESTURE.GRAB;
+            }
+            else
+            {
+                gesture = GESTURE.IDLE;
+            }
+
+        }
+        else
+        {
+            Debug.Log("Looking for LeftHand");
+            var go = GameObject.Find("LeftHandPos");
+            if (go)
+            {
+                viveHandLeft = go.transform;
+                // Assigning ViveControllerGrab.leftHandAnimator to be this animator
+                leftHandDevice = viveHandLeft.parent.GetComponent<ViveControllerGrab>().device;
+            }
+        }
+    }
+
+    private void RightHandTracking()
+    {
+        if (viveHandRight != null)
+        {
+            this.transform.position = viveHandRight.position;
+            this.transform.rotation = viveHandRight.rotation;
+
+            if (rightHandDevice.GetPress(SteamVR_Controller.ButtonMask.Touchpad))
+            {
+                gesture = GESTURE.POINT;
+            }
+            else if (rightHandDevice.GetPress(SteamVR_Controller.ButtonMask.Trigger))
+            {
+                gesture = GESTURE.GRAB;
+            }
+            else
+            {
+                gesture = GESTURE.IDLE;
+            }
+
+        }
+        else
+        {
+            Debug.Log("Looking for RightHand");
+            var go = GameObject.Find("RightHandPos");
+            if (go)
+            {
+                viveHandRight = go.transform;
+                // Assigning ViveControllerGrab.leftHandAnimator to be this animator
+                rightHandDevice = viveHandRight.parent.GetComponent<ViveControllerGrab>().device;
+            }
+        }
+    }
+
 	void LateUpdate () {
 
 
         if (isServer)
         {
-            if (viveHandLeft != null)
+            if (isLeft)
             {
-                this.transform.position = viveHandLeft.position;
-                this.transform.rotation = viveHandLeft.rotation;
-
-                if (leftHandDevice.GetPress(SteamVR_Controller.ButtonMask.Touchpad))
-                {
-                    gesture = GESTURE.POINT;
-                }
-                else if (leftHandDevice.GetPress(SteamVR_Controller.ButtonMask.Trigger))
-                {
-                    gesture = GESTURE.GRAB;
-                }
-                else
-                {
-                    gesture = GESTURE.IDLE;
-                }
-
+                LeftHandTracking();
             }
             else
             {
-                Debug.Log("Looking for LeftHand");
-                var go = GameObject.Find("HandLeftPos");
-                if (go)
-                {
-                    viveHandLeft = go.transform;
-                    // Assigning ViveControllerGrab.leftHandAnimator to be this animator
-                    leftHandDevice = viveHandLeft.parent.GetComponent<ViveControllerGrab>().device;
-                }
+                RightHandTracking();
             }
         }
 
