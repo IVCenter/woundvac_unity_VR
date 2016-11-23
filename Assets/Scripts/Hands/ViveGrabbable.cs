@@ -5,11 +5,13 @@ using UnityEngine.Networking;
 [RequireComponent(typeof(GrabHighlight), typeof(Rigidbody), typeof(Collider))]
 public class ViveGrabbable : NetworkBehaviour
 {
-    [SyncVar]
-    public bool isGrabbed = false;
 
     [SyncVar]
     public bool highlightObject = false;
+
+    public bool isTrainee = false; // If is Trainee side then disable gravity on start
+
+    public bool isGrabbed = false; // This solves object jitter across network cuz it disables gravity when object is grabbed by the player
 
     private Rigidbody rigid;
 
@@ -31,22 +33,26 @@ public class ViveGrabbable : NetworkBehaviour
     void Start()
     {
         rigid = GetComponent<Rigidbody>();
+        if (isTrainee) rigid.useGravity = false; // don't use gravity for Trainee
     }
 
     void Update()
     {
-        if (isGrabbed)
+        if (!isTrainee)
         {
-            if (rigid.useGravity)
+            if (isGrabbed)
             {
-                rigid.useGravity = false;
+                if (rigid.useGravity)
+                {
+                    rigid.useGravity = false;
+                }
             }
-        }
-        else
-        {
-            if (!rigid.useGravity)
+            else
             {
-                rigid.useGravity = true;
+                if (!rigid.useGravity)
+                {
+                    rigid.useGravity = true;
+                }
             }
         }
 
