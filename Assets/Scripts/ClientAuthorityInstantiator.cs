@@ -2,7 +2,11 @@
 using System.Collections;
 using UnityEngine.Networking;
 
-public class GhostVacuum : NetworkBehaviour
+// This object is being spawned by client's NetworkManager as player prefab, it is put in the SpawnInfo->Player Prefab section. 
+// the reason for this is that only the objects spawned on the client are given local authority, so this script can invoke Command
+// attribute on the server side to spawn objects with client authority. We spawn GhostVacuumBody and GhostVacuumPad this way so that
+// they can be controlled on the client side and have their movement synced to the server side as well
+public class ClientAuthorityInstantiator : NetworkBehaviour
 {
     public GameObject[] syncObjects;
 
@@ -17,15 +21,7 @@ public class GhostVacuum : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-//        if (transform.parent == null || transform.parent.tag != "VuforiaTracker")
-//        {
-//            GameObject tracker = GameObject.FindGameObjectWithTag("VuforiaTracker");
-//            if (tracker != null)
-//            {
-//                transform.parent = tracker.transform;
-//                transform.localPosition = Vector3.zero;
-//            }
-//        }
+
     }
 
     [Command]

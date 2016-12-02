@@ -12,8 +12,26 @@ public class GameManager : NetworkBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+
 	}
+
+    [Command]
+    void CmdSpawnWithLocalAuthority()
+    {
+//        GameObject item = Instantiate(prefab, pos, Quaternion.identity) as GameObject;
+//        NetworkServer.Spawn(item);
+//        NetworkServer.SpawnWithClientAuthority(go, connectionToClient);
+        Debug.Log("*********************** CmdSpawnWithLocalAuthority");
+        foreach (GameObject go in syncObjects)
+        {
+            if (go == null) continue;
+
+            GameObject g = Instantiate(go) as GameObject;
+            NetworkServer.SpawnWithClientAuthority(g, connectionToClient);
+            Debug.Log("Client spawned object: " + g.name);
+
+        }
+    }
 
     public override void OnStartServer()
     {
@@ -32,12 +50,7 @@ public class GameManager : NetworkBehaviour {
     public override void OnStartClient()
     {
         Debug.Log("============== Client Started");
-        //foreach (GameObject go in syncObjects)
-        //{
-        //    GameObject g = Instantiate(go) as GameObject;
-        //    NetworkServer.Spawn(g);
-        //    Debug.Log("NetworkServer spawned object: " + g.name);
 
-        //}
+//        CmdSpawnWithLocalAuthority();
     }
 }
