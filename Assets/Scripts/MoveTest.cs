@@ -4,6 +4,7 @@ using UnityEngine.Networking;
 
 public class MoveTest : NetworkBehaviour
 {
+
     public enum AUTHORITY {
         NONE,
         CLIENT_MOVE,
@@ -18,6 +19,7 @@ public class MoveTest : NetworkBehaviour
         if (authority == AUTHORITY.NONE) return;
         if (authority == AUTHORITY.CLIENT_MOVE && isClient) Move();
         if (authority == AUTHORITY.SERVER_MOVE && isServer) Move();
+
     }
 
     private void Move()

@@ -20,6 +20,8 @@ public class GameManager : NetworkBehaviour {
         Debug.Log("============== Server Started");
         foreach (GameObject go in syncObjects)
         {
+            if (go == null) continue;
+
             GameObject g = Instantiate(go) as GameObject;
             NetworkServer.Spawn(g);
             Debug.Log("NetworkServer spawned object: " + g.name);
